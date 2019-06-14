@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+import Api from '../../utils/api.js'
 const app = getApp()
 
 Page({
@@ -11,9 +12,22 @@ Page({
   },
   //事件处理函数
   bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
+    // wx.navigateTo({
+    //   url: '../logs/logs'
+    // })
+    let params = {
+      'type': '1'
+    }
+    wx.showLoading({
+      title: '加载中...',
     })
+    Api.getHomeBigImage(params).then((data) => {
+      wx.hideLoading()
+      let msg = data.name
+      console.log(msg)
+    }).catch(
+      wx.hideLoading()
+    )
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
