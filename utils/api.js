@@ -1,6 +1,7 @@
 /// 获取app实例
 const app = getApp()
-const API_BASE = 'https://appapi.rizili.net'
+// const API_BASE = 'https://appapi.rizili.net'
+const API_BASE = 'http://mall-appapi.dadi01.net'
 
 /**
  * 网络请求方法
@@ -27,6 +28,7 @@ function requestData(url, data) {
         if (app.debug) {
           console.log('response data', res)
         }
+        console.log('response data', res)
         if (res.statusCode == 500) {
           resolve(res.data)
         } else {
@@ -43,6 +45,6 @@ function requestData(url, data) {
 module.exports = {
   /// 获取首页大图
   getHomeBigImage(data) {
-    return requestData(`${API_BASE}/index/bigImg`,data)
+    return requestData(`${API_BASE}/crm/index/bigImg`,data)
   }
 }
