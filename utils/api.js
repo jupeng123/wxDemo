@@ -1,7 +1,10 @@
 /// 获取app实例
-const app = getApp()
-// const API_BASE = 'https://appapi.rizili.net'
-const API_BASE = 'http://mall-appapi.dadi01.net'
+const app = getApp();
+const API_BASE = 'http://news-at.zhihu.com/api';
+const API_V4 = API_BASE + '/4';
+const API_V3 = API_BASE + '/3';
+const API_NEWS = API_V4 + '/news';
+const API_STORY = API_V4 + '/story';
 
 /**
  * 网络请求方法
@@ -19,17 +22,14 @@ function requestData(url, data) {
       url: url,
       data: data || {},
       header: {
-        'Content-type': 'application/json',
-        'app-version': '0.8.0',
-        'app-system': '3',
-        'project-id': '2'
+        'Content-type': 'application/json'
       },
       success: function (res) {
         if (app.debug) {
           console.log('response data', res)
         }
         console.log('response data', res)
-        if (res.statusCode == 500) {
+        if (res.statusCode == 200) {
           resolve(res.data)
         } else {
           reject()
@@ -43,8 +43,31 @@ function requestData(url, data) {
 }
 
 module.exports = {
-  /// 获取首页大图
-  getHomeBigImage(data) {
-    return requestData(`${API_BASE}/crm/index/bigImg`,data)
+  getNewsLatest() {
+    return requestData(`${API_BASE}/latest`);
+  },
+  getBeforeNews(date) {
+    return requestData(`http://news.at.zhihu.com/api/4/news/before/${date}`);
+  },
+  getNewsDetail(newsId) {
+    return requestData(`${API_NEWS}/${newsId}`);
+  },
+  getTheme() {
+    return requestData(`${API_V4}/themes`);
+  },
+  getStoryExtraInfo(storyId) {
+    return requestData(`${API_STORY}-extra/${storyId}`);
+  },
+  getThemeStories(themeId) {
+    return requestData(`${API_V4}/theme/${themeId}`);
+  },
+  getStoryLongComments(storyId) {
+    return requestData(`${API_STORY}/${storyId}/long-comments`);
+  },
+  getStoryShortComments(storyId) {
+    return requestData(`${API_STORY}/${storyId}/short-comments`);
+  },
+  getSplashCover(size) {
+    return requestData(`${API_V4}/start-image/${size}`);
   }
-}
+};
