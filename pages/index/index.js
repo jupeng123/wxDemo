@@ -10,7 +10,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    pageData: {}, //列表数据
+    siderData: {}, //轮播图数据
+    currentDate: null,
+    isDrawerShow: false
   },
 
   /**
@@ -24,7 +27,35 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+    wx.showLoading({
+      title: '加载中',
+    });
+    Api.getNewsLatest().then(data => {
+      data = Utils.correctData(data)
+      let tData = handleStories(data.stories);
+      tData.unshift({
+        isLabel: true,
+        title: '今日热文'
+      });
+      this.setData({
+        siderData: data.top_stories,
+        pageData: tData,
+        currentDate: new Date()
+      })
+      wx.hideLoading()
+    }).catch(error => {
+      wx.hideLoading()
+      wx.showToast({
+        title: '数据加载异常，下拉重刷新',
+        icon: 'none',
+        duration: 5000
+      })
+    })
+  },
+
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.onReady();
   },
 
   /**
@@ -67,5 +98,31 @@ Page({
    */
   onShareAppMessage: function () {
     
+  },
+
+  // 浮动球点击 侧栏展开
+  ballClickEvent() {
+    slideSwitch.call(this, !this.data.isDrawerShow)
   }
+
 })
+
+function handleStories(stories) {
+  if (!stories) {
+    return stories;
+  }
+  for (let i = 0; i < stories.length; i++) {
+    if (stories[i].images) {
+      stories[i].images = stories[i].images[0];
+    }
+  }
+  return stories
+}
+
+// 侧栏 drawer 展开收缩
+function slideSwitch(isShow) {
+  this.setData({
+    isDrawerShow: isShow
+  });
+  this.selectComponent('#drawer').drawerSwitch(isShow);
+}

@@ -44,7 +44,7 @@ function requestData(url, data) {
 
 module.exports = {
   getNewsLatest() {
-    return requestData(`${API_BASE}/latest`);
+    return requestData(`${API_NEWS}/latest`);
   },
   getBeforeNews(date) {
     return requestData(`http://news.at.zhihu.com/api/4/news/before/${date}`);
