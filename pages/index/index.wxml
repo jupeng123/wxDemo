@@ -29,6 +29,8 @@
   </view>
 </drawer>
 
-<!-- 首页轮播图 -->
-
-<!-- 日报列表 -->
+<scroll-view scroll-y='true' style='height:100%;width:100%;' bindscrolltolower='loadingMoreEvent'>
+  <!-- 首页轮播 -->
+  <slider style='margin: 0' dataSource="{{siderData}}" bindclick='toDetailPage'></slider>
+  <!-- 日报列表 -->
+</scroll-view>
