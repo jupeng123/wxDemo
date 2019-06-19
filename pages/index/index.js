@@ -100,6 +100,47 @@ Page({
     
   },
 
+  // 列表加载更多
+  loadingMoreEvent(e) {
+    wx.showLoading({
+      title: '加载中',
+    });
+    let date = new Date(Date.parse(this.data.currentDate) - 1000 * 60 * 60 * 24);
+    let pageData = [];
+    let y = date.getFullYear();
+    let m = (date.getMonth() + 1);
+    let d = date.getDate();
+    m = m > 9 ? m : '0' + m;
+    d = d > 9 ? d : '0' + d;
+    let dateStr = [y, m, d].join('');
+    Api.getBeforeNews(dateStr).then(data => {
+      data = Utils.correctData(data);
+      pageData = this.data.pageData;
+      pageData.push({
+        isLabel: true,
+        title: ([y, m, d].join('.') + '  星期' + weekdayStr[date.getDay()])
+      });
+      pageData = pageData.concat(handleStories(data.stories));
+      this.setData({
+        currentDate: date,
+        pageData: pageData
+      });
+      wx.hideLoading()
+    }).catch(error => {
+      wx.hideLoading()
+      wx.showToast({
+        title: '数据加载失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+
+  toDetailPage(e) {
+    const id = e.detail.data.id;
+    console.log(id);
+  },
+
   // 浮动球点击 侧栏展开
   ballClickEvent() {
     slideSwitch.call(this, !this.data.isDrawerShow)

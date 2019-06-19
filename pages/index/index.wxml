@@ -33,4 +33,5 @@
   <!-- 首页轮播 -->
   <slider style='margin: 0' dataSource="{{siderData}}" bindclick='toDetailPage'></slider>
   <!-- 日报列表 -->
+  <nlist dataSource='{{pageData}}' bindclick='toDetailPage'></nlist>
 </scroll-view>
