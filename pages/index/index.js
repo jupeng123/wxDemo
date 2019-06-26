@@ -160,7 +160,7 @@ function handleStories(stories) {
   }
   for (let i = 0; i < stories.length; i++) {
     if (stories[i].images) {
-      stories[i].images = stories[i].images[0];
+      stories[i].image = stories[i].images[0];
     }
   }
   return stories
