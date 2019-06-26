@@ -141,6 +141,12 @@ Page({
     console.log(id);
   },
 
+  toSettingPage() {
+    wx.navigateTo({
+      url: '../setting/setting',
+    })
+  },
+
   // 浮动球点击 侧栏展开
   ballClickEvent() {
     slideSwitch.call(this, !this.data.isDrawerShow)
