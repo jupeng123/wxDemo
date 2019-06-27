@@ -138,7 +138,9 @@ Page({
 
   toDetailPage(e) {
     const id = e.detail.data.id;
-    console.log(id);
+    wx.navigateTo({
+      url: '../detail/detail?id=' + id,
+    })
   },
 
   toSettingPage() {
