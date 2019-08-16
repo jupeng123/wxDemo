@@ -1,3 +1,14 @@
 <view>
-  <text>2312</text>
+  <view class='header-cover' wx:if="{{news.image}}">
+    <image mode='aspectFill' style='height:100%' src='{{news.iange}}'></image>
+    <view class='mask' data-src='{{news.image}}' bindtap='previewImgEvent'></view>
+    <view class='desc'>
+      <text>{{news.title}}</text>
+    </view>
+    <text class='cover-source'>{{news.image_source}}</text>
+  </view>
+  <view class='black-desc' wx:else>
+    <text>{{news.title}}</text>
+  </view>
+
 </view>

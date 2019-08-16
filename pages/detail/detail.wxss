@@ -1,0 +1,13 @@
+page {
+  background: #fafafa;
+}
+
+.header-cover {
+  position: relative;
+  height: 500rpx;
+  overflow: hidden;
+}
+
+.header-cover image {
+  width: 100%;
+}
